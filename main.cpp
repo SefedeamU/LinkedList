@@ -9,12 +9,25 @@ struct Node{
         value = valor;
         next = nullptr;
     }
+
+
 };
 
 
 template <typename T>
 class LinkedList{
+private:
     Node<T>* head;
+public:
+
+    void print(){
+        Node<T>* current = head;
+        while(current != nullptr){
+            std::cout<<current->value<<" ";
+            current = current->next;
+        }
+        std::cout<<std::endl;
+    }
 
     T front(){
         if (head != nullptr)
@@ -30,17 +43,23 @@ class LinkedList{
     }
 
     void push_front(T valor){
-        Node<T> newNode = new Node<T> (valor);
-        newNode.next = head->value;
+        Node<T> *newNode = new Node<T> (valor);
+        newNode->next = head;
     }
 
     void push_back(T valor){
+        Node<T>* newNode = new Node<T> (valor);
+
+        if(is_empty()){
+            head = newNode;
+            return;
+        }
+
         Node<T>* current = head;
         while(current->next != nullptr){
             current = current->next;
         }
-        Node<T>* newNode = new Node<T> (valor);
-        current->next = newNode;
+        current->next=newNode;
     }
 
     void pop_front(){
@@ -117,8 +136,64 @@ class LinkedList{
         }
         head = prev;
     }
+
+    void insert(T x, Node<T> *insertion){
+
+        if(x == 0){
+            push_front(insertion->value);
+            return;
+        }
+
+        Node<T>* prev = head;
+
+        for (int i=1; i<x; i++){
+            prev = prev->next;
+        }
+
+        Node<T>* temp = prev->next;
+
+        insertion->next = temp;
+
+        prev->next = insertion;
+    }
+
+    void swapByTwo(){
+        Node<T>* current = head;
+        while(current != nullptr && current->next != nullptr){
+            T temp = current->value;
+            current->value = current->next->value;
+            current->next->value = temp;
+            current = current->next->next;
+        }
+    }
+
+
+
+    /*Dado el encabezado de una de lista vinculada, en el que cada nodo contiene un valor entero.
+Entre cada par de nodos adyacentes, inserte un nuevo nodo con un valor igual al máximo común divisor
+de ellos. Devuelve la lista vinculada después de la inserción.
+El máximo común divisor de dos números es el mayor entero positivo que divide a ambos números.*/
+
+
 };
 
 
 int main() {
+
+    LinkedList<int> *Lista = new LinkedList<int> ();
+    Lista->push_back(1);
+    Lista->push_back(2);
+    Lista->push_back(3);
+    Lista->push_back(4);
+    Lista->push_back(5);
+    Lista->push_back(6);
+    Lista->push_back(7);
+
+    Lista->print();
+
+    Node<int> *newNode = new Node<int>(88);
+
+    Lista->insert(5, newNode);
+
+    Lista->print();
 }
