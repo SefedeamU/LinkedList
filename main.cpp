@@ -80,6 +80,43 @@ class LinkedList{
         return size;
     }
 
+    void clear(){
+        Node<T>* current = head;
+        while(current->next != nullptr){
+            Node<T>* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    void sort(){
+        Node<T>* current = head;
+        while(current->next != nullptr){
+            Node<T>* next = current->next;
+            while(next != nullptr){
+                if(current->value > next->value){
+                    T temp = current->value;
+                    current->value = next->value;
+                    next->value = temp;
+                }
+                next = next->next;
+            }
+            current = current->next;
+        }
+    }
+
+    void reverse(){
+        Node<T>* current = head;
+        Node<T>* prev = nullptr;
+        Node<T>* next = nullptr;
+        while(current != nullptr){
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+    }
 };
 
 
